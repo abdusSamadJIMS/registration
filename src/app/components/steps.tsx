@@ -25,7 +25,7 @@ const Steps = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: n
                         className={`step 
                     ${index + 1 <= currentStep ? 'step-primary' : ''}`}
                     >
-                        {index === 0 ? "Coaching & Academy" : index === 1 ? "Gymnast" : "Payment"}
+                        {index === 0 ? "Club Information" : index === 1 ? "Gymnast Details" : "Payment & Confirmation"}
                     </div>
                 ))}
             </div>

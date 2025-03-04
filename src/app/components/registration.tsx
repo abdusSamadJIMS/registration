@@ -60,8 +60,15 @@ const Registration = () => {
         const success = submitForm();
         if (success) {
 
-            await newEntry(coachAcademy, gymnasts, bannerPromotion, payment)
-            router.push('/thank-you');
+            const res = await newEntry(coachAcademy, gymnasts, bannerPromotion, payment)
+            if (res.ok) {
+                router.push('/thank-you');
+                // router.push('/thank-you');
+            } else {
+                console.error('Error submitting form', res);
+                alert('Error submitting form. Please try again later.');
+                // router.push('/thank-you');
+            }
         } else {
             console.error('Error submitting form');
             alert('Please complete all required fields in step 3');
@@ -76,7 +83,7 @@ const Registration = () => {
         <section className=''>
             <Steps currentStep={step} totalSteps={3} />
             <div className='flex justify-end mt-5'>
-                <span className='text-sm text-accent text-right '>
+                <span className='text-sm text-info text-right '>
                     All fields are mandatory
                 </span>
             </div>

@@ -607,6 +607,7 @@ export type Gymnast = {
     discipline: string;
     level: string;
     gymnastName: string;
+    fatherName: string;
     dob: string;
     ageCategory: string;
 };
@@ -664,6 +665,7 @@ const useRegistrationStore = create<FormState & FormActions>()(
                 discipline: "",
                 level: "",
                 gymnastName: "",
+                fatherName: "",
                 dob: "",
                 ageCategory: "",
             }],
@@ -793,6 +795,7 @@ const useRegistrationStore = create<FormState & FormActions>()(
                     discipline: "",
                     level: "",
                     gymnastName: "",
+                    fatherName: "",
                     dob: "",
                     ageCategory: "",
                 }],

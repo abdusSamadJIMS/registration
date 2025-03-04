@@ -468,7 +468,7 @@ const PaymentInformation = () => {
     const [uploading, setUploading] = useState(false);
 
     const isDelhi = coachAcademy.clubLocation.toLowerCase() === "delhi";
-    const perGymnastFee = isDelhi ? 1999 : 3999;
+    const perGymnastFee = isDelhi ? 1800 : 1800;
     const baseTotalFees = perGymnastFee * gymnasts.length;
     const totalFees = bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
 
@@ -567,9 +567,10 @@ const PaymentInformation = () => {
             <div className='w-full bg-base-200 p-4 rounded-lg sticky top-0 z-20'>
                 <h3 className='font-bold mb-2'>Fee Details</h3>
                 <p className='text-sm'>
-                    {isDelhi ? '₹1,999/- per gymnast (Delhi/NCR)' : '₹3,999/- per gymnast'} × {gymnasts.length} gymnasts
+                    {'₹1,800/- per gymnast '} × {gymnasts.length} gymnasts
+                    {/* {isDelhi ? '₹1,999/- per gymnast (Delhi/NCR)' : '₹3,999/- per gymnast'} × {gymnasts.length} gymnasts */}
                 </p>
-                {bannerPromotion.wantBanner && <p className='text-sm text-primary'>+ ₹1,500 (Banner Promotion)</p>}
+                {bannerPromotion.wantBanner && <p className='text-sm text-neutral'>+ ₹1,500 (Banner Promotion)</p>}
                 <p className='font-bold mt-2'>Total Fees: ₹{totalFees.toLocaleString()}</p>
             </div>
 
@@ -603,6 +604,7 @@ const PaymentInformation = () => {
                                 <div>
                                     <p>Account Name: SAURVIK TEXTILE AND SPORTS</p>
                                     <p>Account Number: 10175408073</p>
+                                    <p>IFSC: IDFB0021015</p>
                                     <p>Swift Code: IDFBINBBMUM</p>
                                     <p>Bank name: IDFC FIRST</p>
                                     <p>Branch: GURGAON - MANESAR BRANCH</p>

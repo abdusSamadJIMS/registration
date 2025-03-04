@@ -19,8 +19,9 @@ model CoachAcademy {
   clubLocation      String
   clubRegion        String
   coachName         String
-  email             String    @unique
+  email             String
   phone             String
+  paymentVerified   Boolean   @default(false)
   gymnasts          Gymnast[]
   wantBanner        Boolean
   bannerFile        String? // Store file URL or reference
@@ -37,6 +38,7 @@ model Gymnast {
   discipline     String
   level          String
   gymnastName    String
+  fatherName     String
   dob            String
   ageCategory    String
   coachAcademyId String       @db.ObjectId

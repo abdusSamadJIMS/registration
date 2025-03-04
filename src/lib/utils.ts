@@ -66,6 +66,26 @@ export const getLevels = (dob: string) => {
     const eligibleLevels = levelsAge[age]
     return eligibleLevels;
 }
+
+export const shortAgeGroupToNormal = (ageGroup: string) => {
+    const obj: {
+        [key: string]: string;
+    } = {
+        "u6": "Under 6",
+        "u7": "Under 7",
+        "u8": "Under 8",
+        "u9": "Under 9",
+        "u10": "Under 10",
+        "u11": "Under 11",
+        "u12": "Under 12",
+        "u13": "Under 13",
+        "u14": "Under 14",
+        "u15": "Under 15",
+        "open": "Open"
+    }
+    return obj[ageGroup] || ageGroup;
+}
+
 export const uploadImage = async (image: File) => {
     if (!image) return;
 
@@ -90,3 +110,4 @@ export const uploadImage = async (image: File) => {
         return { imageUrl: "", ok: false }; // Return empty URL on network error
     }
 };
+

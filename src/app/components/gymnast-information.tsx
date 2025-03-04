@@ -151,30 +151,32 @@
 'use client';
 import { useShallow } from 'zustand/react/shallow';
 import useRegistrationStore from '@/lib/store/formStore';
-import { getCurrentDate } from '@/lib/utils';
+import { getCurrentDate, shortAgeGroupToNormal } from '@/lib/utils';
 
 // Helper function to calculate age category
 const getAgeCategory = (age: number, level: string): string => {
     switch (level) {
         case 'level-1':
-            if (age === 5) return 'u6';
+            if (age <= 5) return 'u6';
             if (age === 6) return 'u7';
             if (age > 6) return 'open';
             break;
         case 'level-2':
-            if (age === 5) return 'u6';
+            if (age <= 5) return 'u6';
             if (age === 6) return 'u7';
             if (age === 7) return 'u8';
             if (age > 7) return 'open';
             break;
         case 'level-3':
-            if (age === 5) return 'u6';
+            if (age <= 5) return 'u6';
             if (age === 6) return 'u7';
             if (age === 7) return 'u8';
             if (age === 8) return 'u9';
             if (age > 8) return 'open';
             break;
         case 'level-4':
+            if (age <= 5) return 'u6';
+
             if (age === 6) return 'u7';
             if (age === 7) return 'u8';
             if (age === 8) return 'u9';
@@ -182,6 +184,9 @@ const getAgeCategory = (age: number, level: string): string => {
             if (age > 9) return 'open';
             break;
         case 'level-5':
+            if (age <= 5) return 'u6';
+
+            if (age === 6) return 'u7';
             if (age === 7) return 'u8';
             if (age === 8) return 'u9';
             if (age === 9) return 'u10';
@@ -189,9 +194,9 @@ const getAgeCategory = (age: number, level: string): string => {
             if (age > 10) return 'open';
             break;
         default:
-            return '';
+            return 'open';
     }
-    return '';
+    return 'open';
 };
 
 // Helper function to calculate exact age from DOB
@@ -220,14 +225,21 @@ const GymnastInformation = () => {
     );
 
     const addGymnast = () => {
+        const lastDiscipline = gymnasts.length > 0
+            ? gymnasts[gymnasts.length - 1].discipline
+            : '';
+        const lastLevel = gymnasts.length > 0
+            ? gymnasts[gymnasts.length - 1].level
+            : '';
         setGymnasts([
             ...gymnasts,
             {
-                discipline: '',
-                level: '',
+                discipline: lastDiscipline,
+                level: lastLevel,
                 gymnastName: '',
                 dob: '',
                 ageCategory: '',
+                fatherName: "",
             },
         ]);
     };
@@ -286,21 +298,6 @@ const GymnastInformation = () => {
                         </fieldset>
 
                         <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Enter Date of Birth</legend>
-                            <input
-                                max={today}
-                                placeholder="DOB"
-                                type="date"
-                                value={g.dob}
-                                onChange={(e) => updateField(i, 'dob', e.target.value)}
-                                className="input w-full"
-                            />
-                            {getError(i, 'dob') && (
-                                <p className="text-error fieldset-label">{getError(i, 'dob')}</p>
-                            )}
-                        </fieldset>
-
-                        <fieldset className="fieldset">
                             <legend className="fieldset-legend">Select Level</legend>
                             <select
                                 value={g.level}
@@ -333,15 +330,46 @@ const GymnastInformation = () => {
                                 <p className="text-error fieldset-label">{getError(i, 'gymnastName')}</p>
                             )}
                         </fieldset>
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">Enter Gymnast Father{"'"}s Name</legend>
+                            <input
+                                value={g.fatherName}
+                                onChange={(e) => updateField(i, 'fatherName', e.target.value)}
+                                placeholder="Gymnast Father's Full Name"
+                                className="input w-full"
+                            />
+                            {getError(i, 'fatherName') && (
+                                <p className="text-error fieldset-label">{getError(i, 'fatherName')}</p>
+                            )}
+                        </fieldset>
 
                         <fieldset className="fieldset">
-                            <legend className="fieldset-legend">Age Category</legend>
+                            <legend className="fieldset-legend">Enter Date of Birth</legend>
                             <input
+                                max={today}
+                                placeholder="DOB"
+                                type="date"
+                                value={g.dob}
+                                onChange={(e) => updateField(i, 'dob', e.target.value)}
+                                className="input w-full"
+                            />
+                            {getError(i, 'dob') && (
+                                <p className="text-error fieldset-label">{getError(i, 'dob')}</p>
+                            )}
+                        </fieldset>
+
+                        <fieldset className="fieldset">
+                            <legend className="fieldset-legend">Age Group</legend>
+                            <input
+                                type='hidden'
                                 value={g.ageCategory}
                                 onChange={(e) => updateField(i, 'ageCategory', e.target.value)}
                                 className="input w-full"
                                 disabled
                             />
+                            <input type="text" readOnly
+                                value={shortAgeGroupToNormal(g.ageCategory)}
+                                className="input w-full" />
                             {getError(i, 'ageCategory') && (
                                 <p className="text-error fieldset-label">{getError(i, 'ageCategory')}</p>
                             )}

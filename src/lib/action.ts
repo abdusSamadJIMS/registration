@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
 import { Gymnast } from "./store/formStore";
 
@@ -70,6 +71,7 @@ export async function newEntry(
                     gymnastName: gymnast.gymnastName,
                     dob: gymnast.dob,
                     ageCategory: gymnast.ageCategory,
+                    fatherName: gymnast.fatherName
                 },
             });
         });
@@ -78,9 +80,46 @@ export async function newEntry(
         await Promise.all(gymnastPromises);
 
         // Step 4: Return success response
+        revalidatePath("/(admin)/admin")
         return { ok: true, coachAcademyId: newCoachAcademy.id };
     } catch (error) {
         console.error("Error in newEntry:", error);
         return { ok: false, error: error instanceof Error ? error.message : "An unknown error occurred" };
     }
+}
+
+
+export async function getEntries(page: number, query: string) {
+    const max = 10
+    const offset = page * max - max;
+    try {
+        const coachAcademy = await prisma.coachAcademy.findMany({
+            take: max,
+            skip: offset,
+            include: {
+                gymnasts: true
+            },
+            where: query ? {
+                OR: [
+                    { clubName: { contains: query, mode: "insensitive" } },
+                    { coachName: { contains: query, mode: "insensitive" } },
+                    { gymnasts: { some: { gymnastName: { contains: query, mode: "insensitive" } } } },
+                    { gymnasts: { some: { fatherName: { contains: query, mode: "insensitive" } } } },
+                ]
+            } : undefined
+        })
+        // revalidatePath("/(admin)/admin")
+        return { ok: true, data: coachAcademy };
+    } catch (error) {
+        return {
+            ok: false,
+            error: error instanceof Error ? error.message : "An unknown error occurred"
+        }
+    }
+}
+
+export async function getTotalPages() {
+    const max = 10
+    const count = await prisma.coachAcademy.count()
+    return Math.ceil(count / max)
 }
