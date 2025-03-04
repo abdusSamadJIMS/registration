@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model CoachAcademy {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  clubName          String
+  clubLocation      String
+  clubRegion        String
+  coachName         String
+  email             String    @unique
+  phone             String
+  gymnasts          Gymnast[]
+  wantBanner        Boolean
+  bannerFile        String? // Store file URL or reference
+  paymentMode       String
+  fees              Int
+  paymentScreenshot String? // Store file URL or reference
+  eligibility       Boolean   @default(true)
+  understand        Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+}
+
+model Gymnast {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  discipline     String
+  level          String
+  gymnastName    String
+  dob            String
+  ageCategory    String
+  coachAcademyId String       @db.ObjectId
+  coachAcademy   CoachAcademy @relation(fields: [coachAcademyId], references: [id])
+}

@@ -29,6 +29,7 @@ export default function ImageUpload() {
             });
 
             const data = await res.json();
+            console.log("UPLOADED: " + data)
             if (res.ok) {
                 setImageUrl(data.imageUrl);
             } else {
@@ -45,7 +46,7 @@ export default function ImageUpload() {
         <div className="p-4 border rounded-md">
             <input type="file" onChange={handleFileChange} className="mb-2" />
             {preview && <img src={preview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
-            <button onClick={uploadImage} disabled={uploading} className="bg-blue-500 text-white px-4 py-2 rounded">
+            <button onClick={uploadImage} disabled={uploading} className="bg-blue-500 text-white px-4 py-2 rounded-sm">
                 {uploading ? "Uploading..." : "Upload to Imgur"}
             </button>
 

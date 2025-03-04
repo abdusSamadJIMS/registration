@@ -25,7 +25,7 @@
 //                     setCoachAcademy({ ...coachAcademy, clubName: e.target.value })
 //                 }}
 //                 defaultValue={coachAcademy.clubName}
-//                 placeholder="Club/Academy Name" className="input input-bordered w-full " />
+//                 placeholder="Club/Academy Name" className="input  w-full " />
 //             <select
 //                 onChange={e => {
 //                     setCoachAcademy({ ...coachAcademy, clubLocation: e.target.value })
@@ -44,19 +44,19 @@
 //                     setCoachAcademy({ ...coachAcademy, coachName: e.target.value })
 //                 }}
 //                 defaultValue={coachAcademy.coachName}
-//                 type="text" placeholder="Coach’s Full Name" className="input input-bordered w-full " />
+//                 type="text" placeholder="Coach’s Full Name" className="input  w-full " />
 //             <input
 //                 onChange={e => {
 //                     setCoachAcademy({ ...coachAcademy, phone: e.target.value })
 //                 }}
 //                 defaultValue={coachAcademy.phone}
-//                 type="text" placeholder="Contact Number" className="input input-bordered w-full " />
+//                 type="text" placeholder="Contact Number" className="input  w-full " />
 //             <input
 //                 onChange={e => {
 //                     setCoachAcademy({ ...coachAcademy, email: e.target.value })
 //                 }}
 //                 defaultValue={coachAcademy.email}
-//                 type="email" placeholder="Email Address" className="input input-bordered w-full " />
+//                 type="email" placeholder="Email Address" className="input  w-full " />
 //         </div>
 //     )
 // }
@@ -78,19 +78,22 @@ const CoachAcademyInformation = () => {
 
     return (
         <div className='flex flex-col gap-4 w-full'>
-            <div className='w-full'>
+            <fieldset className="fieldset ">
+                <legend className="fieldset-legend">Enter Club/Academy Name</legend>
                 <input
                     value={coachAcademy.clubName}
                     onChange={(e) => setCoachAcademy({ clubName: e.target.value })}
-                    placeholder="Club/Academy Name"
-                    className="input input-bordered w-full"
-                />
+                    type="text"
+                    className="input w-full"
+                    placeholder="Club/Academy Name" />
                 {validationErrors.clubName && (
-                    <p className="text-error text-sm mt-1">{validationErrors.clubName}</p>
+                    <p className="fieldset-label text-error">{validationErrors.clubName}</p>
                 )}
-            </div>
+            </fieldset>
 
-            <div className='w-full'>
+
+            <fieldset className='fieldset'>
+                <legend className='fieldset-legend'>Select Club/Academy Location</legend>
                 <select
                     value={coachAcademy.clubLocation}
                     onChange={(e) => setCoachAcademy({ clubLocation: e.target.value })}
@@ -104,47 +107,69 @@ const CoachAcademyInformation = () => {
                     ))}
                 </select>
                 {validationErrors.clubLocation && (
-                    <p className="text-error text-sm mt-1">{validationErrors.clubLocation}</p>
+                    <p className="text-error fieldset-label">{validationErrors.clubLocation}</p>
                 )}
-            </div>
+            </fieldset>
+            <fieldset className='fieldset'>
+                <legend className="fieldset-legend">Select Club/Academy Region</legend>
+                <select
+                    value={coachAcademy.clubRegion}
+                    onChange={(e) => setCoachAcademy({ clubRegion: e.target.value })}
+                    className="select select-bordered w-full"
+                >
+                    <option disabled value="">Club/Academy Region</option>
+                    <option value={"ncr"}>
+                        NCR
+                    </option>
+                    <option value={"roi"}>
+                        Rest of India
+                    </option>
+                </select>
+                {validationErrors.clubLocation && (
+                    <p className="text-error fieldset-label">{validationErrors.clubLocation}</p>
+                )}
+            </fieldset>
 
-            <div className='w-full'>
+            <fieldset className='fieldset'>
+                <legend className="fieldset-legend">Enter Coach{"'"}s Full Name</legend>
                 <input
                     value={coachAcademy.coachName}
                     onChange={(e) => setCoachAcademy({ coachName: e.target.value })}
                     placeholder="Coach’s Full Name"
-                    className="input input-bordered w-full"
+                    className="input  w-full"
                 />
                 {validationErrors.coachName && (
-                    <p className="text-error text-sm mt-1">{validationErrors.coachName}</p>
+                    <p className="text-error fieldset-label">{validationErrors.coachName}</p>
                 )}
-            </div>
+            </fieldset>
 
-            <div className='w-full'>
+            <fieldset className='fieldset'>
+                <legend className="fieldset-legend">Enter Contact Number</legend>
                 <input
                     value={coachAcademy.phone}
                     onChange={(e) => setCoachAcademy({ phone: e.target.value })}
                     placeholder="Contact Number"
-                    className="input input-bordered w-full"
+                    className="input  w-full"
                     type="tel"
                 />
                 {validationErrors.phone && (
-                    <p className="text-error text-sm mt-1">{validationErrors.phone}</p>
+                    <p className="text-error fieldset-label">{validationErrors.phone}</p>
                 )}
-            </div>
+            </fieldset>
 
-            <div className='w-full'>
+            <fieldset className='fieldset'>
+                <legend className="fieldset-legend">Enter Email Address</legend>
                 <input
                     value={coachAcademy.email}
                     onChange={(e) => setCoachAcademy({ email: e.target.value })}
                     placeholder="Email Address"
-                    className="input input-bordered w-full"
+                    className="input  w-full"
                     type="email"
                 />
                 {validationErrors.email && (
-                    <p className="text-error text-sm mt-1">{validationErrors.email}</p>
+                    <p className="text-error fieldset-label">{validationErrors.email}</p>
                 )}
-            </div>
+            </fieldset>
         </div>
     );
 };

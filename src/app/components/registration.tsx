@@ -8,6 +8,8 @@ import FormPagination from '../components/form-pagination';
 import GymnastInformation from '../components/gymnast-information';
 import PaymentInformation from '../components/payment-information';
 import Steps from '../components/steps';
+import { newEntry } from '@/lib/action';
+
 
 
 const Registration = () => {
@@ -19,14 +21,22 @@ const Registration = () => {
         validateStep,
         clearErrors,
         setStep,
-        submitForm
+        submitForm,
+        bannerPromotion,
+        coachAcademy,
+        gymnasts,
+        payment
     } = useRegistrationStore(
         useShallow((state) => ({
             step: state.step,
             validateStep: state.validateStep,
             clearErrors: state.clearErrors,
             setStep: state.setStep,
-            submitForm: state.submitForm
+            submitForm: state.submitForm,
+            payment: state.payment,
+            gymnasts: state.gymnasts,
+            coachAcademy: state.coachAcademy,
+            bannerPromotion: state.bannerPromotion,
         }))
     );
 
@@ -46,11 +56,14 @@ const Registration = () => {
         setStep(step - 1);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const success = submitForm();
         if (success) {
+
+            await newEntry(coachAcademy, gymnasts, bannerPromotion, payment)
             router.push('/thank-you');
         } else {
+            console.error('Error submitting form');
             alert('Please complete all required fields in step 3');
         }
     };

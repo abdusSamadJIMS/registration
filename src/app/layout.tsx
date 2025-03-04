@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en"
-      theme-data="retro"
+      theme-data="aqua"
     >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
