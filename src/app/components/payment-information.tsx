@@ -521,8 +521,8 @@ const PaymentInformation = () => {
             return;
         }
 
-        if (file.size > 1024 * 1024) { // 1MB limit
-            alert('File size must be less than 1MB');
+        if (file.size > 1024 * 1024 * 2) { // 1MB limit
+            alert('File size must be less than 2MB');
             return;
         }
 

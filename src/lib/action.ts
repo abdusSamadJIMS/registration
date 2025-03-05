@@ -123,3 +123,20 @@ export async function getTotalPages() {
     const count = await prisma.coachAcademy.count()
     return Math.ceil(count / max)
 }
+
+export async function getAllEntries() {
+    try {
+        const coachAcademy = await prisma.coachAcademy.findMany({
+            include: {
+                gymnasts: true
+            }
+        })
+        return { ok: true, data: coachAcademy };
+    } catch (error) {
+        return {
+            ok: false,
+            error: error instanceof Error ? error.message : "An unknown error occurred"
+        }
+
+    }
+}
