@@ -103,6 +103,8 @@ export async function getEntries(page: number, query: string) {
             where: query ? {
                 OR: [
                     { clubName: { contains: query, mode: "insensitive" } },
+                    { email: { contains: query, mode: "insensitive" } },
+                    { phone: { contains: query, mode: "insensitive" } },
                     { coachName: { contains: query, mode: "insensitive" } },
                     { gymnasts: { some: { gymnastName: { contains: query, mode: "insensitive" } } } },
                     { gymnasts: { some: { fatherName: { contains: query, mode: "insensitive" } } } },

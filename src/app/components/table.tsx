@@ -4,6 +4,7 @@ import React from 'react'
 import GymnastModal from './gymnast-modal'
 import BannerInfoModal from './banner-info-modal'
 import VerifyToggle from './verify-toggle'
+import PaymentInfoModal from './payment-info.modal'
 
 const Table = async ({ currentPage, query }: { query: string, currentPage: number }) => {
     const res = await getEntries(currentPage, query)
@@ -24,6 +25,7 @@ const Table = async ({ currentPage, query }: { query: string, currentPage: numbe
                         <th>Club</th>
                         <th>Coach</th>
                         <th>Gymnast</th>
+                        <th>Payment</th>
                         <th>Banner</th>
                     </tr>
                 </thead>
@@ -61,6 +63,12 @@ const Table = async ({ currentPage, query }: { query: string, currentPage: numbe
                                         gymnasts={d.gymnasts}
                                     />
                                 </td>
+                                <th>
+                                    <PaymentInfoModal
+                                        paymentScreenShot={d.paymentScreenshot || ""}
+                                        id={d.id}
+                                    />
+                                </th>
                                 <th>
                                     <BannerInfoModal
                                         bannerImage={d.bannerFile || ""}
