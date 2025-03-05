@@ -3,6 +3,7 @@ import { getEntries } from '@/lib/action'
 import React from 'react'
 import GymnastModal from './gymnast-modal'
 import BannerInfoModal from './banner-info-modal'
+import VerifyToggle from './verify-toggle'
 
 const Table = async ({ currentPage, query }: { query: string, currentPage: number }) => {
     const res = await getEntries(currentPage, query)
@@ -32,11 +33,10 @@ const Table = async ({ currentPage, query }: { query: string, currentPage: numbe
                         data?.map((d) => (
                             <tr key={d.id}>
                                 <th>
-                                    <label>
-                                        <input
-                                            defaultChecked={d.paymentVerified}
-                                            type="checkbox" className="checkbox" />
-                                    </label>
+                                    <VerifyToggle
+                                        id={d.id}
+                                        paymentVerified={d.paymentVerified}
+                                    />
                                 </th>
                                 <td>
                                     <div className="flex items-center gap-3">

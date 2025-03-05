@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
 import { Gymnast } from "./store/formStore";
+import { transporter } from "./transporter";
 
 type CoachAcademy = {
     clubName: string;
@@ -137,6 +138,52 @@ export async function getAllEntries() {
             ok: false,
             error: error instanceof Error ? error.message : "An unknown error occurred"
         }
+
+    }
+}
+
+
+export async function toggleVerificationStatus(id: string, verified: boolean) {
+
+    try {
+        const updateEntry = await prisma.coachAcademy.update({
+            where: {
+                id
+            },
+            data: {
+                paymentVerified: verified
+            }
+        })
+        const mailOptions = {
+            from: process.env.GMAIL_USER,
+            to: [updateEntry.email
+            ],
+            subject: `3rd All India Level Wise Gymnastics Competition Verified`.toLocaleUpperCase(),
+            // text: `${name} registered in ${event} ${subEvent ? `-${subEvent}` : ''}`,
+            html: `<main style="background:black;height:100vh;width:100vw;overflow:hidden;color:white;
+            display:flex;justify-content:center;flex-direction:column;align-items:center
+            ">
+              <h1>Your registration for 3rd All India Level Wise Gymnastics Competition is verified successfully</h1>
+              <h3>Thank you for registering 3rd All India Level Wise Gymnastics Competition. 
+              </h3>
+            </main>`
+        }
+        if (verified) {
+            await new Promise((resolve, reject) => {
+                transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err)
+                    } else {
+                        resolve(info)
+                    }
+                })
+            })
+        }
+
+        revalidatePath("/admin")
+    } catch (error) {
+        console.log(error);
 
     }
 }
