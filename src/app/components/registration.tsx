@@ -59,11 +59,11 @@ const Registration = () => {
     const handleSubmit = async () => {
         const success = submitForm();
         if (success) {
+            router.push('/thank-you');
 
             const res = await newEntry(coachAcademy, gymnasts, bannerPromotion, payment)
             if (res.ok) {
                 router.push('/thank-you');
-                // router.push('/thank-you');
             } else {
                 console.error('Error submitting form', res);
                 alert('Error submitting form. Please try again later.');
