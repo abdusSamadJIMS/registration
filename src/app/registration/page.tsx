@@ -247,9 +247,8 @@ import Registration from '../components/registration'
 const page = () => {
     return (
         <main className='container max-w-2xl mx-auto p-4 min-h-screen'>
-            <h1 className='text-3xl font-bold text-primary flex flex-col justify-center items-center py-3'>
-                Registration Form for Gymnasts
-
+            <h1 className='text-2xl font-bold text-primary flex flex-col justify-center items-center py-3'>
+                Registration Form - All India Level Wise Gymnastics Competition 2025
             </h1>
             <span className="divider"></span>
             <Registration />

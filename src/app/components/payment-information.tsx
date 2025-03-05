@@ -596,7 +596,11 @@ const PaymentInformation = () => {
                     <div className="w-full bg-base-200 p-4 rounded-lg ">
                         <h3 className='pb-5'>{payment.paymentMode === "upi" ? "Upi Information" : "Bank Details"}</h3>
                         {payment.paymentMode === "upi" && (
-                            <Image src={qr} alt='QR' width={170} height={170} />
+                            <div>
+                                <Image src={qr} alt='QR' width={170} height={170} />
+                                <p>Scan the QR code with your UPI app to make the payment.</p>
+                                <p>UPI ID: stas-05@idfcbank</p>
+                            </div>
                         )}
 
                         {
