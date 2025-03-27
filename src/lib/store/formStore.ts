@@ -776,6 +776,14 @@ const useRegistrationStore = create<FormState & FormActions>()(
                     return false;
                 }
 
+                const perGymnastFee = 1800;
+                const baseTotalFees = perGymnastFee * state.gymnasts.length * 1.18;
+                const totalFees = state.bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
+
+                state.setPayment({
+                    fees: totalFees
+                })
+
                 console.log('Submitting data:', state);
                 get().clearPersistedStore();
                 return true;

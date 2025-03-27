@@ -62,13 +62,22 @@ const Registration = () => {
         const perGymnastFee = 1800;
         const baseTotalFees = perGymnastFee * gymnasts.length * 1.18;
         const totalFees = bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
-        setPayment({
-            fees: totalFees
-        })
+
+        console.log("----------------------");
+
+        console.log("base Total", baseTotalFees);
+        console.log("\nTotal", totalFees);
+        console.log("\nPayment", payment);
+        console.log("----------------------");
+
+        // return false
+
         const success = submitForm();
         if (success) {
+            setPayment({
+                fees: totalFees
+            })
             router.push('/thank-you');
-
             const res = await newEntry(coachAcademy, gymnasts, bannerPromotion, payment)
             if (res.ok) {
                 router.push('/thank-you');

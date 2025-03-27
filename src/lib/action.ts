@@ -39,6 +39,10 @@ export async function newEntry(
             throw new Error("Invalid input data");
         }
 
+        const perGymnastFee = 1800;
+        const baseTotalFees = perGymnastFee * gymnasts.length * 1.18;
+        const totalFees = bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
+
         // Step 2: Create the CoachAcademy entry
         const newCoachAcademy = await prisma.coachAcademy.create({
             data: {
@@ -48,7 +52,7 @@ export async function newEntry(
                 coachName: coachAcademy.coachName,
                 email: coachAcademy.email,
                 phone: coachAcademy.phone,
-                fees: payment.fees,
+                fees: totalFees,
                 eligibility: payment.eligibility,
                 understand: payment.understand,
                 paymentScreenshot: payment.paymentScreenshot,
