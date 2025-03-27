@@ -25,7 +25,8 @@ const Registration = () => {
         bannerPromotion,
         coachAcademy,
         gymnasts,
-        payment
+        payment,
+        setPayment
     } = useRegistrationStore(
         useShallow((state) => ({
             step: state.step,
@@ -37,6 +38,7 @@ const Registration = () => {
             gymnasts: state.gymnasts,
             coachAcademy: state.coachAcademy,
             bannerPromotion: state.bannerPromotion,
+            setPayment: state.setPayment
         }))
     );
 
@@ -57,6 +59,12 @@ const Registration = () => {
     };
 
     const handleSubmit = async () => {
+        const perGymnastFee = 1800;
+        const baseTotalFees = perGymnastFee * gymnasts.length * 1.18;
+        const totalFees = bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
+        setPayment({
+            fees: totalFees
+        })
         const success = submitForm();
         if (success) {
             router.push('/thank-you');

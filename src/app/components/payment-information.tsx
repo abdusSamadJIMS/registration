@@ -469,47 +469,9 @@ const PaymentInformation = () => {
 
     const isDelhi = coachAcademy.clubLocation.toLowerCase() === "delhi";
     const perGymnastFee = isDelhi ? 1800 : 1800;
-    const baseTotalFees = perGymnastFee * gymnasts.length;
+    const baseTotalFees = perGymnastFee * gymnasts.length * 1.18;
     const totalFees = bannerPromotion.wantBanner ? baseTotalFees + 1500 : baseTotalFees;
 
-    // const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'payment' | 'banner') => {
-    //     const file = e.target.files?.[0];
-    //     if (!file) return;
-
-    //     const allowedTypes = ['image/jpeg', 'image/png'];
-    //     if (!allowedTypes.includes(file.type)) {
-    //         alert(`Invalid file type. Allowed: ${allowedTypes.join(', ')}`);
-    //         return;
-    //     }
-
-    //     if (file.size > 1024 * 1024) { // 1MB limit
-    //         alert('File size must be less than 1MB');
-    //         return;
-    //     }
-
-    //     setUploading(true);
-    //     const reader = new FileReader();
-    //     reader.onload = async (e) => {
-    //         const result = e.target?.result as string;
-    //         try {
-    //             const res = await uploadImage(file);
-    //             if (res && res.imageUrl) {
-    //                 if (type === 'payment') {
-    //                     setPreviewUrl(result);
-    //                     setPayment({ paymentScreenshot: res.imageUrl });
-    //                 } else {
-    //                     setBannerPreviewUrl(result);
-    //                     setBannerPromotion({ bannerFile: res.imageUrl });
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             alert(`Failed to upload ${type === 'payment' ? 'payment proof' : 'banner'}. Please try again.`);
-    //         } finally {
-    //             setUploading(false);
-    //         }
-    //     };
-    //     reader.readAsDataURL(file);
-    // };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, type: 'payment' | 'banner') => {
         const file = e.target.files?.[0];
@@ -567,7 +529,7 @@ const PaymentInformation = () => {
             <div className='w-full bg-base-200 p-4 rounded-lg sticky top-0 z-20'>
                 <h3 className='font-bold mb-2'>Fee Details</h3>
                 <p className='text-sm'>
-                    {'₹1,800/- per gymnast '} × {gymnasts.length} gymnasts
+                    {'₹1,800/- per gymnast '} × {gymnasts.length} gymnasts + 18% GST
                     {/* {isDelhi ? '₹1,999/- per gymnast (Delhi/NCR)' : '₹3,999/- per gymnast'} × {gymnasts.length} gymnasts */}
                 </p>
                 {bannerPromotion.wantBanner && <p className='text-sm text-neutral'>+ ₹1,500 (Banner Promotion)</p>}
